@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.gitignore
+.env
+.env.template
+.git/
+postgres
