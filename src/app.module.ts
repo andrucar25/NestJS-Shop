@@ -1,13 +1,20 @@
+import { join } from 'path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
 import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true  //hacerlo global provoca que no se deba importar en cada modulo para utilizar envs y hacer la inyeccion directa
+    }),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -20,11 +27,17 @@ import { SeedModule } from './seed/seed.module';
       synchronize: true
     }),
 
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname,'..','public'), 
+    }),
+
     ProductsModule,
 
     CommonModule,
 
-    SeedModule
+    SeedModule,
+
+    FilesModule
   ],
   controllers: [],
   providers: [],
