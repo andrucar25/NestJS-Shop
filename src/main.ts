@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
+// import * as passport from 'passport';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -14,7 +16,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     })
   );
-
+// app.use(passport.initialize())
   await app.listen(process.env.PORT ?? 3000);
   logger.log(`App running on port ${process.env.PORT}`)
 }
